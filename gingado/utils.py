@@ -1,64 +1,105 @@
-import sdmx
 import datetime
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
-from gingado.internals import DayFeatures, WeekFeatures, MonthFeatures, QuarterFeatures, DateTimeLike, Frequency, FrequencyLike, validate_and_get_freq, _check_valid_features, _get_day_features, _get_week_features, _get_month_features, _get_quarter_features
+import sdmx
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import check_is_fitted, validate_data
 
-__all__ = ['get_datetime', 'read_attr', 'Lag', 'list_SDMX_sources', 'list_all_dataflows', 'load_SDMX_data', 'codelists']
+from gingado.internals import (
+    DateTimeLike,
+    DayFeatures,
+    Frequency,
+    FrequencyLike,
+    MonthFeatures,
+    QuarterFeatures,
+    WeekFeatures,
+    _check_valid_features,
+    _get_day_features,
+    _get_month_features,
+    _get_quarter_features,
+    _get_week_features,
+    validate_and_get_freq,
+)
+from gingado.settings import SDMX_HTTP_CACHE_EXPIRE_AFTER, SDMX_HTTP_CACHE_PATH
+
+__all__ = [
+    "get_datetime",
+    "read_attr",
+    "Lag",
+    "list_SDMX_sources",
+    "list_all_dataflows",
+    "load_SDMX_data",
+    "codelists",
+]
+
+
+def _get_sdmx_client(source: str):
+    cache_path = Path(SDMX_HTTP_CACHE_PATH)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        return sdmx.Client(
+            source,
+            backend="sqlite",
+            cache_name=str(cache_path),
+            expire_after=SDMX_HTTP_CACHE_EXPIRE_AFTER,
+        )
+    except TypeError:
+        return sdmx.Client(source)
+
 
 def get_datetime():
     "Returns the time now"
-    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z") 
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")
 
-def read_attr(
-    obj
-):
+
+def read_attr(obj):
     """
     Reads and yields the type and values of fitted attributes from an object.
-    
+
     Args:
         obj: Object from which attributes will be read.
     """
     for a in dir(obj):
         # if statement filters out non-interesting attributes
-        if a == '_estimator_type' or (a.endswith("_") and not a.startswith("_") and not a.endswith("__")):
+        if a == "_estimator_type" or (
+            a.endswith("_") and not a.startswith("_") and not a.endswith("__")
+        ):
             try:
                 model_attr = obj.__getattribute__(a)
                 yield {a: model_attr}
-            except:
+            except Exception:
                 pass
+
 
 class Lag(BaseEstimator, TransformerMixin):
     """
     A transformer for lagging variables.
-    
+
     Args:
         lags (int): The number of lags to apply.
         jump (int): The number of initial observations to skip before applying the lag.
         keep_contemporaneous_X (bool): Whether to keep the contemporaneous values of X in the output.
     """
+
     def __init__(self, lags=1, jump=0, keep_contemporaneous_X=False):
         self.lags = lags
         self.jump = jump
         self.keep_contemporaneous_X = keep_contemporaneous_X
-    
-    def fit(
-        self, 
-        X:np.ndarray,
-        y=None
-    ):
+
+    def fit(self, X: np.ndarray, y=None):
         """
         Fits the Lag transformer.
-        
+
         Args:
             X (np.ndarray): Array-like data of shape (n_samples, n_features).
             y: Array-like data of shape (n_samples,) or (n_samples, n_targets) or None.
-            
+
         Returns:
             self: A fitted version of the `Lag` instance.
-        """  
+        """
         self.index = None
         if hasattr(X, "index"):
             self.index = X.index
@@ -71,20 +112,20 @@ class Lag(BaseEstimator, TransformerMixin):
         return self
 
     def transform(
-        self, 
-        X:np.ndarray,
+        self,
+        X: np.ndarray,
     ):
         """
         Applies the lag transformation to the dataset `X`.
-        
+
         Args:
             X (np.ndarray): Array-like data of shape (n_samples, n_features).
-            
+
         Returns:
             A lagged version of `X`.
         """
         X_forlag = X
-        
+
         X = validate_data(self, X)
         check_is_fitted(self)
         X_lags = []
@@ -92,43 +133,44 @@ class Lag(BaseEstimator, TransformerMixin):
         for lag in range(self.effective_lags_):
             if lag < self.jump:
                 continue
-            lag_count = lag+1
+            lag_count = lag + 1
             lag_X = np.roll(X_forlag, lag_count, axis=0)
             X_lags.append(lag_X)
             if hasattr(self, "feature_names_in_"):
-                X_colnames = X_colnames + [col+"_lag_"+str(lag+1) for col in list(self.feature_names_in_)]
+                X_colnames = X_colnames + [
+                    col + "_lag_" + str(lag + 1) for col in list(self.feature_names_in_)
+                ]
         X = np.concatenate(X_lags, axis=1)
         if self.keep_contemporaneous_X:
             X = np.concatenate([X_forlag, X], axis=1)
-        X = X[self.effective_lags_:, :]
+        X = X[self.effective_lags_ :, :]
         if hasattr(self, "index") and self.index is not None:
-            new_index = self.index[self.effective_lags_:]
+            new_index = self.index[self.effective_lags_ :]
             X = pd.DataFrame(X, index=new_index, columns=X_colnames)
         else:
             X = pd.DataFrame(X)
         return X
 
+
 def list_SDMX_sources():
     """
     Fetches the list of SDMX sources.
-    
+
     Returns:
         The list of codes representing the SDMX sources available for data download.
     """
     return sdmx.list_sources()
 
-def list_all_dataflows(
-    codes_only:bool=False,
-    return_pandas:bool=True
-):
+
+def list_all_dataflows(codes_only: bool = False, return_pandas: bool = True):
     """
     Lists all SDMX dataflows. Note: When using as a parameter to an `AugmentSDMX` object
     or to the `load_SDMX_data` function, set `codes_only=True`"
-    
+
     Args:
         codes_only (bool): Whether to return only the dataflow codes.
         return_pandas (bool): Whether to return the result in a pandas DataFrame format.
-        
+
     Returns:
         All available dataflows for all SDMX sources.
     """
@@ -136,58 +178,66 @@ def list_all_dataflows(
     dflows = {}
     for src in sources:
         try:
-            dflows[src] = sdmx.to_pandas(sdmx.Client(src).dataflow().dataflow)
-            dflows[src] = dflows[src].index if codes_only else dflows[src].index.reset_index()
-        except:
+            dflows[src] = sdmx.to_pandas(_get_sdmx_client(src).dataflow().dataflow)
+            dflows[src] = (
+                dflows[src].index if codes_only else dflows[src].index.reset_index()
+            )
+        except Exception:
             pass
     if return_pandas:
-        dflows = pd.concat({
-            src: pd.DataFrame.from_dict(dflows)
-            for src, dflows in dflows.items()
-            })[0].rename('dataflow')
+        dflows = pd.concat(
+            {src: pd.DataFrame.from_dict(dflows) for src, dflows in dflows.items()}
+        )[0].rename("dataflow")
     return dflows
 
-def load_SDMX_data(
-    sources:dict,
-    keys:dict,
-    params:dict,
-    verbose:bool=True
-    ):
+
+def load_SDMX_data(sources: dict, keys: dict, params: dict, verbose: bool = True):
     """
     Loads datasets from SDMX.
-    
+
     Args:
         sources (dict): A dictionary with the sources and dataflows per source.
         keys (dict): The keys to be used in the SDMX query.
         params (dict): The parameters to be used in the SDMX query.
         verbose (bool): Whether to communicate download steps to the user.
-        
+
     Returns:
         A pandas DataFrame with data from SDMX or None if no data matches the sources, keys, and parameters.
     """
     data_sdmx = {}
     for source in list(sources.keys()):
-        src_conn = sdmx.Client(source)
+        src_conn = _get_sdmx_client(source)
         src_dflows = src_conn.dataflow()
-        if sources[source] == 'all':
+        if sources[source] == "all":
             dflows = {k: v for k, v in src_dflows.dataflow.items()}
         else:
-            dflows = {k: v for k, v in src_dflows.dataflow.items() if k in sources[source]}
+            dflows = {
+                k: v for k, v in src_dflows.dataflow.items() if k in sources[source]
+            }
         for dflow in list(dflows.keys()):
-            if verbose: print(f"Querying data from {source}'s dataflow '{dflow}' - {dflows[dflow]._name}...")
+            if verbose:
+                print(
+                    f"Querying data from {source}'s dataflow '{dflow}' - {dflows[dflow]._name}..."
+                )
             try:
-                data = sdmx.to_pandas(src_conn.data(dflow, key=keys, params=params), datetime='TIME_PERIOD')
-            except:
-                if verbose: print("this dataflow does not have data in the desired frequency and time period.")
+                data = sdmx.to_pandas(
+                    src_conn.data(dflow, key=keys, params=params),
+                    datetime="TIME_PERIOD",
+                )
+            except Exception:
+                if verbose:
+                    print(
+                        "this dataflow does not have data in the desired frequency and time period."
+                    )
                 continue
-            data.columns = ['__'.join(col) for col in data.columns.to_flat_index()]
-            data_sdmx[source+"__"+dflow] = data
+            data.columns = ["__".join(col) for col in data.columns.to_flat_index()]
+            data_sdmx[source + "__" + dflow] = data
 
-    if len(data_sdmx.keys()) is None:
+    if not data_sdmx:
         return
 
     df = pd.concat(data_sdmx, axis=1)
-    df.columns = ['_'.join(col) for col in df.columns.to_flat_index()]
+    df.columns = ["_".join(col) for col in df.columns.to_flat_index()]
     return df
 
 
@@ -204,9 +254,14 @@ def codelists(dflow):
     codelists = {}
     for k, v in dflow.items():
         if isinstance(v, list):  # If v is a list of dataflows
-            codelists[k] = {dataflow: sdmx.to_pandas(sdmx.Client(k).dataflow(dataflow).codelist) for dataflow in v}
+            codelists[k] = {
+                dataflow: sdmx.to_pandas(
+                    _get_sdmx_client(k).dataflow(dataflow).codelist
+                )
+                for dataflow in v
+            }
         else:  # If v is a single dataflow
-            codelists[k] = sdmx.to_pandas(sdmx.Client(k).dataflow(v).codelist)
+            codelists[k] = sdmx.to_pandas(_get_sdmx_client(k).dataflow(v).codelist)
     return codelists
 
 
@@ -255,7 +310,9 @@ def get_timefeat(
     # We currently use these for all frequencies
     features.append(_get_quarter_features(df.index))
 
-    time_features = pd.concat(features, axis=1) if features else pd.DataFrame(index=df.index)
+    time_features = (
+        pd.concat(features, axis=1) if features else pd.DataFrame(index=df.index)
+    )
 
     # Filter for user-provided features
     if columns is not None:
@@ -286,7 +343,9 @@ def dates_Xy(
     result = []
     for date in dates:
         # data up to 'date' and y_value at 'date'
-        X_filtered = {freq: _get_filtered_data(Xdata, date) for freq, Xdata in X.items()}
+        X_filtered = {
+            freq: _get_filtered_data(Xdata, date) for freq, Xdata in X.items()
+        }
         y_value = y.loc[date]
 
         # Calculate temporal features for y data
@@ -341,7 +400,9 @@ class TemporalFeatureTransformer(BaseEstimator, TransformerMixin):
         Raises:
             ValueError: If the input DataFrame's index is not a DatetimeIndex.
         """
-        X_transformed = get_timefeat(df=X, freq=self.freq, columns=self.features, add_to_df=True)
+        X_transformed = get_timefeat(
+            df=X, freq=self.freq, columns=self.features, add_to_df=True
+        )
         return X_transformed
 
     @staticmethod

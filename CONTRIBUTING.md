@@ -26,6 +26,28 @@ To work with the documentation an tests, we use `quarto`. You can either use RSt
 
 To modify the index page or the README.md file in the repository root, please only edit the index.qmd file. All changes in the index.qmd file will be rendered to the README.md file and moved automatically to the repository root via a post-render script `move_readme_to_root.py`.
 
+### Rendering documentation efficiently
+
+Documentation renders can be expensive because several pages execute live SDMX queries and train models. The repository is configured to avoid re-running unchanged documents:
+
+- Quarto execution caching is enabled at project level.
+- Quarto freeze is set to `auto`, so a full `quarto render` only re-executes documents whose source changed.
+- SDMX HTTP responses are cached on disk under the local `gingado/` cache directory.
+
+When you are working on a single page, prefer an incremental render instead of rebuilding the entire site:
+
+```
+quarto render 01_forecast.qmd
+```
+
+When code, dependencies, or upstream data have changed and you need a clean rebuild, refresh the execution cache explicitly:
+
+```
+quarto render --cache-refresh
+```
+
+If you need to discard frozen project outputs completely, delete the `_freeze/` directory and render again.
+
 ### Reporting Issues and Suggestions
 
 If you encounter a bug, have suggestions, or want to propose new functionalities:
