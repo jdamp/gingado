@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,12 +35,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9b8f6c33b8a184d254b5eaa30f9d0661.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-db77c3ec39dfe3474f9f96fa411a1105.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -183,6 +183,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#setting-up-for-development" id="toc-setting-up-for-development" class="nav-link" data-scroll-target="#setting-up-for-development">Setting Up for Development</a></li>
   <li><a href="#modifying-the-index-page-and-readme.md" id="toc-modifying-the-index-page-and-readme.md" class="nav-link" data-scroll-target="#modifying-the-index-page-and-readme.md">Modifying the index page and README.md</a></li>
+  <li><a href="#rendering-documentation-efficiently" id="toc-rendering-documentation-efficiently" class="nav-link" data-scroll-target="#rendering-documentation-efficiently">Rendering documentation efficiently</a></li>
   <li><a href="#reporting-issues-and-suggestions" id="toc-reporting-issues-and-suggestions" class="nav-link" data-scroll-target="#reporting-issues-and-suggestions">Reporting Issues and Suggestions</a></li>
   <li><a href="#contributing-code" id="toc-contributing-code" class="nav-link" data-scroll-target="#contributing-code">Contributing Code</a>
   <ul class="collapse">
@@ -197,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="toc-actions"><ul><li><a href="https://github.com/bis-med-it/gingado/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
 
 
 
@@ -226,6 +227,20 @@ pip install -r dev_requirements.txt</code></pre>
 <section id="modifying-the-index-page-and-readme.md" class="level3">
 <h3 class="anchored" data-anchor-id="modifying-the-index-page-and-readme.md">Modifying the index page and README.md</h3>
 <p>To modify the index page or the README.md file in the repository root, please only edit the index.qmd file. All changes in the index.qmd file will be rendered to the README.md file and moved automatically to the repository root via a post-render script <code>move_readme_to_root.py</code>.</p>
+</section>
+<section id="rendering-documentation-efficiently" class="level3">
+<h3 class="anchored" data-anchor-id="rendering-documentation-efficiently">Rendering documentation efficiently</h3>
+<p>Documentation renders can be expensive because several pages execute live SDMX queries and train models. The repository is configured to avoid re-running unchanged documents:</p>
+<ul>
+<li>Quarto execution caching is enabled at project level.</li>
+<li>Quarto freeze is set to <code>auto</code>, so a full <code>quarto render</code> only re-executes documents whose source changed.</li>
+<li>SDMX HTTP responses are cached on disk under the local <code>gingado/</code> cache directory.</li>
+</ul>
+<p>When you are working on a single page, prefer an incremental render instead of rebuilding the entire site:</p>
+<pre><code>quarto render 01_forecast.qmd</code></pre>
+<p>When code, dependencies, or upstream data have changed and you need a clean rebuild, refresh the execution cache explicitly:</p>
+<pre><code>quarto render --cache-refresh</code></pre>
+<p>If you need to discard frozen project outputs completely, delete the <code>_freeze/</code> directory and render again.</p>
 </section>
 <section id="reporting-issues-and-suggestions" class="level3">
 <h3 class="anchored" data-anchor-id="reporting-issues-and-suggestions">Reporting Issues and Suggestions</h3>
@@ -496,6 +511,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -608,6 +625,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

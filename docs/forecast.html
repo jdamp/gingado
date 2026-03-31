@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,12 +91,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9b8f6c33b8a184d254b5eaa30f9d0661.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-db77c3ec39dfe3474f9f96fa411a1105.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -132,7 +132,6 @@ div.csl-indent {
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Using gingado to forecast financial series – gingado">
 <meta property="og:description" content="A beginning-to-end illustration with foreign exchange rates inspired by Rossi (2013)">
-<meta property="og:image" content="01_forecast_files/figure-html/cell-7-output-2.png">
 <meta property="og:site_name" content="gingado">
 </head>
 
@@ -310,13 +309,13 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="downloading-fx-rates">Downloading FX rates</h2>
 <p>In this exercise, we will concentrate on the bilateral FX rates between the 🇺🇸 US Dollar (USD) and the 🇧🇷 Brazilian Real (BRL), 🇨🇦 Canadian Dollar (CAD), 🇨🇭 Swiss Franc (CHF), 🇪🇺 Euro (EUR), 🇬🇧 British Pound (GBP), 🇯🇵 Japanese Yen (JPY) and 🇲🇽 Mexican Peso (MXN).</p>
 <p>The rates are standardised to measure the units in foreign currency bought by one USD. Therefore, positive returns represent USD is more valued compared to the other currency, and vice-versa.</p>
-<div id="7d43c527" class="cell" data-execution_count="1">
+<div id="e2ad14fb" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gingado.utils <span class="im">import</span> load_SDMX_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="c5795343" class="cell" data-execution_count="2">
+<div id="47d039a9" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_SDMX_data(</span>
@@ -334,7 +333,7 @@ div.csl-indent {
 </div>
 </div>
 <p>The code below simplifies the column names by removing the identification of the SDMX sources, dataflows and keys and replacing it with the usual code for the bilateral exchange rates.</p>
-<div id="1dcaed7f" class="cell" data-execution_count="3">
+<div id="bd58b83f" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Original column names:"</span>)</span>
@@ -347,17 +346,17 @@ div.csl-indent {
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original column names:
-Index(['BIS__WS_XRU_D__BR__BRL__A', 'BIS__WS_XRU_D__GB__GBP__A',
-       'BIS__WS_XRU_D__CH__CHF__A', 'BIS__WS_XRU_D__XM__EUR__A',
-       'BIS__WS_XRU_D__CA__CAD__A', 'BIS__WS_XRU_D__JP__JPY__A',
-       'BIS__WS_XRU_D__MX__MXN__A'],
+Index(['BIS__WS_XRU_D__CA__CAD__A', 'BIS__WS_XRU_D__MX__MXN__A',
+       'BIS__WS_XRU_D__JP__JPY__A', 'BIS__WS_XRU_D__XM__EUR__A',
+       'BIS__WS_XRU_D__CH__CHF__A', 'BIS__WS_XRU_D__GB__GBP__A',
+       'BIS__WS_XRU_D__BR__BRL__A'],
       dtype='object')
 New column names:
-Index(['USDBRL', 'USDGBP', 'USDCHF', 'USDEUR', 'USDCAD', 'USDJPY', 'USDMXN'], dtype='object')</code></pre>
+Index(['USDCAD', 'USDMXN', 'USDJPY', 'USDEUR', 'USDCHF', 'USDGBP', 'USDBRL'], dtype='object')</code></pre>
 </div>
 </div>
 <p>The dataset looks like this so far (most recent 5 rows displayed only):</p>
-<div id="9929f006" class="cell" data-execution_count="4">
+<div id="aba8d314" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -370,15 +369,15 @@ Index(['USDBRL', 'USDGBP', 'USDCHF', 'USDEUR', 'USDCAD', 'USDJPY', 'USDMXN'], dt
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">USDBRL</th>
-<th data-quarto-table-cell-role="th">USDGBP</th>
-<th data-quarto-table-cell-role="th">USDCHF</th>
-<th data-quarto-table-cell-role="th">USDEUR</th>
 <th data-quarto-table-cell-role="th">USDCAD</th>
-<th data-quarto-table-cell-role="th">USDJPY</th>
 <th data-quarto-table-cell-role="th">USDMXN</th>
+<th data-quarto-table-cell-role="th">USDJPY</th>
+<th data-quarto-table-cell-role="th">USDEUR</th>
+<th data-quarto-table-cell-role="th">USDCHF</th>
+<th data-quarto-table-cell-role="th">USDGBP</th>
+<th data-quarto-table-cell-role="th">USDBRL</th>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">TIME_PERIOD</th>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th"></th>
@@ -391,54 +390,54 @@ Index(['USDBRL', 'USDGBP', 'USDCHF', 'USDEUR', 'USDCAD', 'USDJPY', 'USDMXN'], dt
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2025-02-26</td>
-<td>5.752741</td>
-<td>0.790197</td>
-<td>0.895585</td>
-<td>0.953562</td>
-<td>1.435492</td>
-<td>149.423095</td>
-<td>20.471536</td>
+<td data-quarto-table-cell-role="th">2026-03-18</td>
+<td>1.371652</td>
+<td>17.734087</td>
+<td>159.556522</td>
+<td>0.869565</td>
+<td>0.788957</td>
+<td>0.751243</td>
+<td>5.224261</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2025-02-27</td>
-<td>5.805574</td>
-<td>0.789090</td>
-<td>0.897872</td>
-<td>0.954472</td>
-<td>1.435525</td>
-<td>149.594350</td>
-<td>20.378066</td>
+<td data-quarto-table-cell-role="th">2026-03-19</td>
+<td>1.372617</td>
+<td>17.917834</td>
+<td>158.812777</td>
+<td>0.870398</td>
+<td>0.793890</td>
+<td>0.751919</td>
+<td>5.298721</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2025-02-28</td>
-<td>5.831524</td>
-<td>0.793468</td>
-<td>0.902315</td>
-<td>0.960523</td>
-<td>1.442609</td>
-<td>150.763615</td>
-<td>20.381423</td>
+<td data-quarto-table-cell-role="th">2026-03-20</td>
+<td>1.371614</td>
+<td>17.816962</td>
+<td>158.771095</td>
+<td>0.865426</td>
+<td>0.787192</td>
+<td>0.748057</td>
+<td>5.255214</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2025-03-03</td>
-<td>5.885332</td>
-<td>0.788629</td>
-<td>0.900908</td>
-<td>0.955566</td>
-<td>1.443287</td>
-<td>151.294792</td>
-<td>20.473292</td>
+<td data-quarto-table-cell-role="th">2026-03-23</td>
+<td>1.370818</td>
+<td>17.766557</td>
+<td>158.554674</td>
+<td>0.862366</td>
+<td>0.786823</td>
+<td>0.745257</td>
+<td>5.259486</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2025-03-04</td>
-<td>5.885384</td>
-<td>0.784200</td>
-<td>0.887657</td>
-<td>0.947239</td>
-<td>1.442076</td>
-<td>148.242872</td>
-<td>20.784124</td>
+<td data-quarto-table-cell-role="th">2026-03-24</td>
+<td>1.374870</td>
+<td>17.885759</td>
+<td>158.926720</td>
+<td>0.864155</td>
+<td>0.790270</td>
+<td>0.747848</td>
+<td>5.266937</td>
 </tr>
 </tbody>
 </table>
@@ -447,14 +446,14 @@ Index(['USDBRL', 'USDGBP', 'USDCHF', 'USDEUR', 'USDCAD', 'USDJPY', 'USDMXN'], dt
 </div>
 </div>
 <p>We are interested in the percentage change from the previous day.</p>
-<div id="202a12b0" class="cell" data-execution_count="5">
+<div id="43814a8c" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>FX_rate_changes <span class="op">=</span> df.pct_change(fill_method<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>FX_rate_changes.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="6a2fa034" class="cell" data-execution_count="6">
+<div id="536b204a" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>FX_rate_changes.plot(subplots<span class="op">=</span><span class="va">True</span>, layout<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">2</span>), figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>), sharex<span class="op">=</span><span class="va">True</span>, title<span class="op">=</span><span class="st">'Selected daily FX rate changes'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -469,7 +468,7 @@ Index(['USDBRL', 'USDGBP', 'USDCHF', 'USDEUR', 'USDCAD', 'USDJPY', 'USDMXN'], dt
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01_forecast_files/figure-html/cell-7-output-2.png" width="1185" height="1198" class="figure-img"></p>
+<p><img src="01_forecast_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -482,13 +481,13 @@ Index(['USDBRL', 'USDGBP', 'USDCHF', 'USDEUR', 'USDCAD', 'USDJPY', 'USDMXN'], dt
 <li><p>daily central bank policy rates from the Bank for International Settlements (BIS) <span class="citation" data-cites="BISstatQR2017">(<a href="#ref-BISstatQR2017" role="doc-biblioref">2017</a>)</span>, and</p></li>
 <li><p>the daily Composite Indicator of Systemic Stress (CISS), created by <span class="citation" data-cites="hollo2012ciss">Hollo, Kremer, and Lo Duca (<a href="#ref-hollo2012ciss" role="doc-biblioref">2012</a>)</span> and updated by the European Central Bank (ECB).</p></li>
 </ul>
-<div id="571bb548" class="cell" data-execution_count="7">
+<div id="275fa084" class="cell" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gingado.augmentation <span class="im">import</span> AugmentSDMX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="a13793e9" class="cell" data-execution_count="8">
+<div id="887b8766" class="cell" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> AugmentSDMX(sources<span class="op">=</span>{<span class="st">'BIS'</span>: <span class="st">'WS_CBPOL_D'</span>, <span class="st">'ECB'</span>: <span class="st">'CISS'</span>}).fit_transform(FX_rate_changes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -512,59 +511,78 @@ Note
 </div>
 </div>
 <p>You can see below that the column names for the newly added columns reflect the source (BIS or ECB), the dataflow (separated from the source by a double underline), and then the specific keys to the series, which are specific to each dataflow.</p>
-<div id="753c1d70" class="cell" data-execution_count="9">
+<div id="635779b6" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>X.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>Index(['USDBRL', 'USDGBP', 'USDCHF', 'USDEUR', 'USDCAD', 'USDJPY', 'USDMXN',
-       'BIS__WS_CBPOL_D__CA', 'BIS__WS_CBPOL_D__CH', 'BIS__WS_CBPOL_D__CL',
-       'BIS__WS_CBPOL_D__CN', 'BIS__WS_CBPOL_D__CO', 'BIS__WS_CBPOL_D__CZ',
-       'BIS__WS_CBPOL_D__DK', 'BIS__WS_CBPOL_D__GB', 'BIS__WS_CBPOL_D__HK',
-       'BIS__WS_CBPOL_D__HR', 'BIS__WS_CBPOL_D__HU', 'BIS__WS_CBPOL_D__ID',
-       'BIS__WS_CBPOL_D__IL', 'BIS__WS_CBPOL_D__IN', 'BIS__WS_CBPOL_D__IS',
-       'BIS__WS_CBPOL_D__JP', 'BIS__WS_CBPOL_D__KR', 'BIS__WS_CBPOL_D__KW',
-       'BIS__WS_CBPOL_D__MA', 'BIS__WS_CBPOL_D__MK', 'BIS__WS_CBPOL_D__MX',
-       'BIS__WS_CBPOL_D__MY', 'BIS__WS_CBPOL_D__NO', 'BIS__WS_CBPOL_D__NZ',
-       'BIS__WS_CBPOL_D__PE', 'BIS__WS_CBPOL_D__PH', 'BIS__WS_CBPOL_D__PL',
-       'BIS__WS_CBPOL_D__RO', 'BIS__WS_CBPOL_D__RS', 'BIS__WS_CBPOL_D__RU',
-       'BIS__WS_CBPOL_D__SA', 'BIS__WS_CBPOL_D__SE', 'BIS__WS_CBPOL_D__TH',
-       'BIS__WS_CBPOL_D__TR', 'BIS__WS_CBPOL_D__US', 'BIS__WS_CBPOL_D__XM',
-       'BIS__WS_CBPOL_D__ZA', 'BIS__WS_CBPOL_D__AR', 'BIS__WS_CBPOL_D__AU',
-       'BIS__WS_CBPOL_D__BR', 'ECB__CISS_D__AT__Z0Z__4F__EC__SS_CIN__IDX',
+<pre><code>Index(['USDCAD', 'USDMXN', 'USDJPY', 'USDEUR', 'USDCHF', 'USDGBP', 'USDBRL',
+       'BIS__WS_CBPOL_D__BR', 'BIS__WS_CBPOL_D__AU', 'BIS__WS_CBPOL_D__CA',
+       'BIS__WS_CBPOL_D__CH', 'BIS__WS_CBPOL_D__CL', 'BIS__WS_CBPOL_D__CN',
+       'BIS__WS_CBPOL_D__CO', 'BIS__WS_CBPOL_D__CZ', 'BIS__WS_CBPOL_D__DK',
+       'BIS__WS_CBPOL_D__GB', 'BIS__WS_CBPOL_D__HK', 'BIS__WS_CBPOL_D__HR',
+       'BIS__WS_CBPOL_D__HU', 'BIS__WS_CBPOL_D__ID', 'BIS__WS_CBPOL_D__IL',
+       'BIS__WS_CBPOL_D__IN', 'BIS__WS_CBPOL_D__IS', 'BIS__WS_CBPOL_D__JP',
+       'BIS__WS_CBPOL_D__KR', 'BIS__WS_CBPOL_D__KW', 'BIS__WS_CBPOL_D__MA',
+       'BIS__WS_CBPOL_D__MK', 'BIS__WS_CBPOL_D__MX', 'BIS__WS_CBPOL_D__MY',
+       'BIS__WS_CBPOL_D__NO', 'BIS__WS_CBPOL_D__NZ', 'BIS__WS_CBPOL_D__PE',
+       'BIS__WS_CBPOL_D__PH', 'BIS__WS_CBPOL_D__PL', 'BIS__WS_CBPOL_D__RO',
+       'BIS__WS_CBPOL_D__RS', 'BIS__WS_CBPOL_D__RU', 'BIS__WS_CBPOL_D__SA',
+       'BIS__WS_CBPOL_D__SE', 'BIS__WS_CBPOL_D__TH', 'BIS__WS_CBPOL_D__TR',
+       'BIS__WS_CBPOL_D__US', 'BIS__WS_CBPOL_D__XM', 'BIS__WS_CBPOL_D__ZA',
+       'BIS__WS_CBPOL_D__AR', 'ECB__CISS_D__AT__Z0Z__4F__EC__SOV_CIN__IDX',
+       'ECB__CISS_D__AT__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__BE__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__BE__Z0Z__4F__EC__SS_CIN__IDX',
        'ECB__CISS_D__CN__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__DE__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__DE__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__ES__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__ES__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__FI__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__FI__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__FR__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__FR__Z0Z__4F__EC__SS_CIN__IDX',
        'ECB__CISS_D__GB__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__GR__Z0Z__4F__EC__SOV_CIN__IDX',
+       'ECB__CISS_D__IE__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__IE__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__IT__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__IT__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__NL__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__NL__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__PT__Z0Z__4F__EC__SOV_CIN__IDX',
        'ECB__CISS_D__PT__Z0Z__4F__EC__SS_CIN__IDX',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SOV_EWN__IDX',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SOV_GDPWN__IDX',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_BM__CON',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SS_BMN__CON',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_CI__IDX',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_CIN__IDX',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_CO__CON',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SS_CON__CON',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_EM__CON',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SS_EMN__CON',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_FI__CON',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SS_FIN__CON',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_FX__CON',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SS_FXN__CON',
        'ECB__CISS_D__U2__Z0Z__4F__EC__SS_MM__CON',
+       'ECB__CISS_D__U2__Z0Z__4F__EC__SS_MMN__CON',
        'ECB__CISS_D__US__Z0Z__4F__EC__SS_CI__IDX',
        'ECB__CISS_D__US__Z0Z__4F__EC__SS_CIN__IDX'],
       dtype='object')</code></pre>
 </div>
 </div>
 <p>Before proceeding, we also include a differentiated version of the central bank policy data. It will be sparse, since these changes occur infrequently for most central banks, but it can help the model uncover how FX rate changes respond to central bank policy changes.</p>
-<div id="03c35378" class="cell" data-execution_count="10">
+<div id="cbc48ac5" class="cell" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="35af7a8c" class="cell" data-execution_count="11">
+<div id="5a8e641c" class="cell" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>X_diff <span class="op">=</span> X.loc[:, X.columns.<span class="bu">str</span>.contains(<span class="st">"BIS__WS_CBPOL_D"</span>, case<span class="op">=</span><span class="va">False</span>)].diff()</span>
@@ -574,7 +592,7 @@ Note
 </div>
 <p>This is how the data looks like now. Note that the names of the added columns reflect the source, dataflow and keys, all separated by underlines (the source is separated from the dataflow by two underlines at all cases). For example, the last key is the jurisdiction of the central bank.</p>
 <p>We will keep all the newly added variables - even those that are from countries not in the currency list. This is because the model may uncover any relationship of interest between central bank policies from other countries and each particular currency pair.</p>
-<div id="29909990" class="cell" data-execution_count="12">
+<div id="71d267a9" class="cell" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>X.describe().transpose()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -599,59 +617,59 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">USDBRL</td>
-<td>5646.0</td>
-<td>0.000163</td>
-<td>0.010440</td>
-<td>-0.080226</td>
-<td>-0.005683</td>
-<td>-0.000105</td>
-<td>0.005456</td>
-<td>0.120503</td>
+<td data-quarto-table-cell-role="th">USDCAD</td>
+<td>5915.0</td>
+<td>0.000005</td>
+<td>0.005602</td>
+<td>-0.043367</td>
+<td>-0.002993</td>
+<td>-0.000122</td>
+<td>0.002946</td>
+<td>0.036864</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">USDGBP</td>
-<td>5646.0</td>
-<td>0.000064</td>
-<td>0.005993</td>
-<td>-0.038140</td>
-<td>-0.003257</td>
-<td>-0.000091</td>
-<td>0.003209</td>
-<td>0.085019</td>
+<td data-quarto-table-cell-role="th">USDMXN</td>
+<td>5915.0</td>
+<td>0.000137</td>
+<td>0.008090</td>
+<td>-0.070532</td>
+<td>-0.004040</td>
+<td>-0.000285</td>
+<td>0.003908</td>
+<td>0.118877</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">USDCHF</td>
-<td>5646.0</td>
-<td>-0.000050</td>
-<td>0.006320</td>
-<td>-0.139149</td>
-<td>-0.003201</td>
-<td>0.000082</td>
-<td>0.003198</td>
-<td>0.085326</td>
+<td data-quarto-table-cell-role="th">USDJPY</td>
+<td>5915.0</td>
+<td>0.000062</td>
+<td>0.006139</td>
+<td>-0.044948</td>
+<td>-0.003020</td>
+<td>0.000224</td>
+<td>0.003292</td>
+<td>0.032901</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">USDEUR</td>
-<td>5646.0</td>
-<td>0.000026</td>
-<td>0.005666</td>
+<td>5915.0</td>
+<td>0.000010</td>
+<td>0.005624</td>
 <td>-0.039574</td>
-<td>-0.003107</td>
-<td>-0.000080</td>
-<td>0.003017</td>
+<td>-0.003079</td>
+<td>-0.000076</td>
+<td>0.002979</td>
 <td>0.048493</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">USDCAD</td>
-<td>5646.0</td>
-<td>0.000013</td>
-<td>0.005689</td>
-<td>-0.043367</td>
-<td>-0.003079</td>
-<td>-0.000129</td>
-<td>0.003018</td>
-<td>0.036864</td>
+<td data-quarto-table-cell-role="th">USDCHF</td>
+<td>5915.0</td>
+<td>-0.000067</td>
+<td>0.006268</td>
+<td>-0.139149</td>
+<td>-0.003177</td>
+<td>0.000087</td>
+<td>0.003141</td>
+<td>0.085326</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -665,10 +683,32 @@ Note
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__XM_diff</td>
-<td>5645.0</td>
+<td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__TR_diff</td>
+<td>5914.0</td>
+<td>-0.001184</td>
+<td>0.318079</td>
+<td>-4.250000</td>
 <td>0.000000</td>
-<td>0.033171</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>8.500000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__US_diff</td>
+<td>5914.0</td>
+<td>0.000402</td>
+<td>0.040767</td>
+<td>-1.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.750000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__XM_diff</td>
+<td>5914.0</td>
+<td>-0.000127</td>
+<td>0.032893</td>
 <td>-0.750000</td>
 <td>0.000000</td>
 <td>0.000000</td>
@@ -677,9 +717,9 @@ Note
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__ZA_diff</td>
-<td>5645.0</td>
-<td>-0.001063</td>
-<td>0.061711</td>
+<td>5914.0</td>
+<td>-0.001141</td>
+<td>0.060551</td>
 <td>-1.500000</td>
 <td>0.000000</td>
 <td>0.000000</td>
@@ -688,47 +728,25 @@ Note
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__AR_diff</td>
-<td>5645.0</td>
-<td>0.004066</td>
-<td>0.869000</td>
+<td>5914.0</td>
+<td>0.003881</td>
+<td>0.849004</td>
 <td>-33.000000</td>
 <td>0.000000</td>
 <td>0.000000</td>
 <td>0.000000</td>
 <td>21.000000</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__AU_diff</td>
-<td>5645.0</td>
-<td>-0.000115</td>
-<td>0.036810</td>
-<td>-1.000000</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.500000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">BIS__WS_CBPOL_D__BR_diff</td>
-<td>5645.0</td>
-<td>-0.002081</td>
-<td>0.107656</td>
-<td>-2.500000</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>1.500000</td>
-</tr>
 </tbody>
 </table>
 
-<p>109 rows × 8 columns</p>
+<p>128 rows × 8 columns</p>
 </div>
 </div>
 </div>
 <p>The policy rates for some central banks have less observations than the others, as seen above.</p>
 <p>Because some data are missing, we will impute data for the missing dates, by simply propagating the last valid observation, and when that is not possible, replacing the missing information with a “0”.</p>
-<div id="a4c1e18e" class="cell" data-execution_count="13">
+<div id="ae052636" class="cell" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X.fillna(method<span class="op">=</span><span class="st">'pad'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
@@ -737,13 +755,13 @@ Note
 </div>
 <p>Now is a good time to start the model documentation. For this, we can use the standard model card that already comes with <code>gingado</code>.</p>
 <p>The goal is to facilitate economists who want to make model documentation a part of their normal workflow.</p>
-<div id="87b52f77" class="cell" data-execution_count="14">
+<div id="9124c564" class="cell" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gingado.model_documentation <span class="im">import</span> ModelCard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="df0e84f7" class="cell" data-execution_count="15">
+<div id="8e705caa" class="cell" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model_doc <span class="op">=</span> ModelCard()</span>
@@ -783,7 +801,7 @@ Note
 </div>
 </div>
 <p>As an example, we can add the following information to the model:</p>
-<div id="7b653564" class="cell" data-execution_count="16">
+<div id="ba5eeb87" class="cell" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model_doc.fill_info({</span>
@@ -807,13 +825,13 @@ Note
 <h2 class="anchored" data-anchor-id="lagging-the-regressors">Lagging the regressors</h2>
 <p>This model will not include any contemporaneous variable. Therefore, all regresors must be lagged.</p>
 <p>For illustration purposes, we use 5 lags in this exercise.</p>
-<div id="b3769e7d" class="cell" data-execution_count="17">
+<div id="5bc5b9b9" class="cell" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gingado.utils <span class="im">import</span> Lag</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="f8da4f45" class="cell" data-execution_count="18">
+<div id="680ac0d9" class="cell" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>n_lags <span class="op">=</span> <span class="dv">5</span></span>
@@ -825,7 +843,7 @@ Note
 </details>
 </div>
 <p>Now is a good opportunity to check by how much we have increased our regressor space:</p>
-<div id="6222c0d6" class="cell" data-execution_count="19">
+<div id="a67e73d2" class="cell" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pd.Series({</span>
@@ -836,8 +854,8 @@ Note
 </details>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>FX rates only               7
-... with augmentation_    109
-... lagged                545
+... with augmentation_    128
+... lagged                640
 dtype: int64</code></pre>
 </div>
 </div>
@@ -846,7 +864,7 @@ dtype: int64</code></pre>
 <h2 class="anchored" data-anchor-id="training-the-models">Training the models</h2>
 <p>Our dataset is now complete. Before using it to train the models, we hold out the most recent data to serve as our testing dataset, so we can compare our models with real out-of-sample information.</p>
 <p>We can choose, say, 1st January 2022.</p>
-<div id="d1b92aed" class="cell" data-execution_count="20">
+<div id="e74e4cd9" class="cell" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cutoff <span class="op">=</span> <span class="st">'2020-01-01'</span></span>
@@ -855,7 +873,7 @@ dtype: int64</code></pre>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>y_train, y_test <span class="op">=</span> y[:cutoff], y[cutoff:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="6b1f10bc" class="cell" data-execution_count="21">
+<div id="61f4d917" class="cell" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>model_doc.fill_info({</span>
@@ -872,7 +890,7 @@ dtype: int64</code></pre>
 </details>
 </div>
 <p>The current status of the documentation is:</p>
-<div id="f19cecac" class="cell" data-execution_count="22">
+<div id="a2a7a0da" class="cell" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pd.Series(model_doc.show_json())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -913,7 +931,7 @@ dtype: object</code></pre>
 <li><code>score</code></li>
 </ul></li>
 </ul>
-<div id="6707e314" class="cell" data-execution_count="23">
+<div id="3ae67172" class="cell" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -923,7 +941,7 @@ dtype: object</code></pre>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> TimeSeriesSplit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="e87c1dc7" class="cell" data-execution_count="24">
+<div id="87b01378" class="cell" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RandomWalkEstimator(BaseEstimator):</span>
@@ -972,7 +990,7 @@ dtype: object</code></pre>
 <p>Now that we have a benchmark, we can create candidate models that will try to beat it.</p>
 <p>In this simplified example, we will choose only two: a random forest, an AdaBoost regressor and a Lasso model. Their hyperparameters are not particularly important for the example, but of course they could be fine-tuned as well.</p>
 <p>In the language of <span class="citation" data-cites="rossi2013exchange">Rossi (<a href="#ref-rossi2013exchange" role="doc-biblioref">2013</a>)</span>, the models below are one <em>“single-equation, lagged fundamental model”</em> for each currency.</p>
-<div id="27b1f621" class="cell" data-execution_count="25">
+<div id="3d0dae5e" class="cell" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
@@ -980,7 +998,7 @@ dtype: object</code></pre>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="10c480c9" class="cell" data-execution_count="26">
+<div id="24d6c426" class="cell" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>forest <span class="op">=</span> RandomForestRegressor(n_estimators<span class="op">=</span><span class="dv">250</span>, max_features<span class="op">=</span><span class="st">'log2'</span>).fit(X_train, y_train[<span class="st">'USDBRL'</span>])</span>
@@ -992,13 +1010,13 @@ dtype: object</code></pre>
 </div>
 <p>We can now compare the model results, using the test dataset we held out previously.</p>
 <p>Note that we must pass the criterion against which we are comparing the forecasts.</p>
-<div id="86309d5a" class="cell" data-execution_count="27">
+<div id="508daadf" class="cell" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="6743fe53" class="cell" data-execution_count="28">
+<div id="01acf7a6" class="cell" data-execution_count="28">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> rw.compare_fitted_candidates(</span>
@@ -1009,16 +1027,16 @@ dtype: object</code></pre>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>pd.Series(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="28">
-<pre><code>RandomWalkEstimator()                                           0.000101
-RandomForestRegressor(max_features='log2', n_estimators=250)    0.000106
-AdaBoostRegressor(n_estimators=150)                             0.000106
-Lasso(alpha=0.1)                                                0.000101
+<pre><code>RandomWalkEstimator()                                           0.000093
+RandomForestRegressor(max_features='log2', n_estimators=250)    0.000096
+AdaBoostRegressor(n_estimators=150)                             0.000096
+Lasso(alpha=0.1)                                                0.000093
 dtype: float64</code></pre>
 </div>
 </div>
 <p>As mentioned above, benchmarks can facilitate the model documentation. In addition to the broader documentation that is already ongoing, each benchmark object create their own where they store model information. We can use that for the broader documentation.</p>
 <p>In our case, the only parameter we created above during fit is the number of samples: not a particularly informative variable but it was included just for illustration purposes. In any case, the parameter appears in the “model_details” section, item “info”, of the benchmark’s <code>rw</code> documentation. Similarly, the parameters of more fully-fledged estimators also appear in that section.</p>
-<div id="3ab229ef" class="cell" data-execution_count="29">
+<div id="2edf7cd2" class="cell" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>rw.document()</span>
@@ -1029,7 +1047,7 @@ dtype: float64</code></pre>
 <pre><code>{'n_samples_': 4314}</code></pre>
 </div>
 </div>
-<div id="1c63e8f0" class="cell" data-execution_count="30">
+<div id="f6cccf14" class="cell" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>model_doc.fill_info({</span>
@@ -1037,14 +1055,14 @@ dtype: float64</code></pre>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="a3902af9" class="cell" data-execution_count="31">
+<div id="25b6ac6c" class="cell" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>model_doc.show_json()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>{'model_details': {'developer': 'Person or organisation developing the model',
-  'datetime': '2025-03-10 15:39:55 ',
+  'datetime': '2026-03-31 08:48:28 ',
   'version': 'Model version',
   'type': 'Model type',
   'info': {'n_samples_': 4314},
@@ -1325,6 +1343,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1488,6 +1508,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
