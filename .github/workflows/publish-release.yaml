@@ -23,19 +23,26 @@ jobs:
     - uses: actions/setup-python@v6
       with:
         python-version: "3.12"
-        cache: pip
-        cache-dependency-path: |
-          requirements.txt
-          dev_requirements.txt
+
+    - name: Install uv
+      run: pip install uv
+
+    - name: Cache uv
+      uses: actions/cache@v5
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-
 
     - name: Restore docs execution cache
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           _freeze
           .jupyter_cache
           gingado/sdmx_http_cache*
-        key: ${{ runner.os }}-docs-${{ hashFiles('_quarto.yml', '*.qmd', 'gingado/**/*.py', 'requirements.txt', 'dev_requirements.txt') }}
+        key: ${{ runner.os }}-docs-${{ hashFiles('_quarto.yml', '*.qmd', 'gingado/**/*.py', 'uv.lock') }}
         restore-keys: |
           ${{ runner.os }}-docs-
 
@@ -70,10 +77,13 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install uv
+        run: pip install uv
+
       - name: Read package version
         id: package_version
         run: |
-          PKG_VERSION=$(python .github/scripts/read_package_version.py)
+          PKG_VERSION=$(uv run python .github/scripts/read_package_version.py)
           echo "value=$PKG_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Verify release tag
@@ -88,28 +98,13 @@ jobs:
         run: |
           bash .github/scripts/check_version_not_on_pypi.sh "$PKG_VERSION"
 
-      - name: Install build dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install build==1.4.2 twine==6.2.0
-
       - name: Build
-        run: |
-          set -euo pipefail
-          python -m build
-
-      - name: Check
-        run: |
-          set -euo pipefail
-          python -m twine check dist/*
+        run: uv build
 
       - name: Publish
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          set -euo pipefail
-          python -m twine upload --non-interactive dist/*
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish
 
 
   publish-docs:

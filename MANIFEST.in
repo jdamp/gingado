@@ -1,8 +1,0 @@
-include LICENSE
-include CONTRIBUTING.md
-include README.md
-include gingado/data/*
-include requirements.txt
-include dev_requirements.txt
-recursive-exclude * __pycache__
-

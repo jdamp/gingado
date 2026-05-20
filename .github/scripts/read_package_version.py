@@ -1,18 +1,16 @@
 from pathlib import Path
-import re
 
+import tomllib
 
-VERSION_FILE = Path("gingado/__init__.py")
-VERSION_PATTERN = re.compile(r'^__version__ = ["\']([^"\']+)["\']', re.M)
+PYPROJECT_FILE = Path("pyproject.toml")
 
 
 def read_package_version() -> str:
-    version_file = VERSION_FILE.read_text(encoding="utf-8")
-    version_match = VERSION_PATTERN.search(version_file)
-    if version_match is None:
-        raise SystemExit("Unable to find package version in gingado/__init__.py")
-
-    return version_match.group(1)
+    data = tomllib.loads(PYPROJECT_FILE.read_text(encoding="utf-8"))
+    version = data.get("project", {}).get("version")
+    if version is None:
+        raise SystemExit("Unable to find package version in pyproject.toml")
+    return version
 
 
 if __name__ == "__main__":
